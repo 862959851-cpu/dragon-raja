@@ -150,9 +150,6 @@ document.getElementById('dept').addEventListener('change', updateSkill);
 // Download .tex
 const form = document.getElementById('admissionForm');
 const generateBtn = document.getElementById('generateBtn');
-const resultCard = document.getElementById('resultCard');
-const downloadLink = document.getElementById('downloadLink');
-const regenerateBtn = document.getElementById('regenerateBtn');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -176,64 +173,25 @@ form.addEventListener('submit', async (e) => {
     num: Math.floor(Math.random() * 9000 + 1000)
   };
 
-  // Generate .tex content
-  const texContent = generateLatex(data);
-
   try {
-    // Try server if available
     const res = await fetch('/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
     if (res.ok) {
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      showResult(url, `卡塞尔学院录取通知书_${nickname}.pdf`);
+      const json = await res.json();
+      window.location.href = `/view.html?token=${json.token}`;
     } else {
-      throw new Error('server unavailable');
+      const err = await res.json().catch(() => ({ error: '服务器错误' }));
+      showError(err.error || '生成失败，请重试');
     }
-  } catch {
-    // Server unavailable - download .tex instead
-    const blob = new Blob([texContent], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    showResult(url, `卡塞尔学院通知书_${nickname}.tex`, true);
+  } catch (e) {
+    showError('网络错误，无法连接服务器');
   }
 
   generateBtn.classList.remove('btn-loading');
   generateBtn.disabled = false;
-});
-
-function showResult(url, filename, isTex = false) {
-  resultCard.style.display = 'block';
-  resultCard.classList.add('result-card-enter');
-  setTimeout(() => resultCard.classList.remove('result-card-enter'), 600);
-  downloadLink.href = url;
-  downloadLink.download = filename;
-  downloadLink.textContent = isTex ? '📄 下载 TeX 源文件' : '📜 下载 PDF';
-
-  const msg = document.getElementById('pdfPreview');
-  if (isTex) {
-    msg.innerHTML = `<p class="preview-placeholder">
-      TeX 源文件已生成。在终端中运行以下命令可编译为 PDF：<br>
-      <code style="display:inline-block;background:rgba(255,255,255,0.08);padding:0.5rem 1rem;border-radius:4px;margin-top:0.5rem;font-size:0.82rem;">
-        python3 generate_pdf.py --nickname "${sanitizeFilename(filename.replace(/\.tex$/, '').replace('卡塞尔学院通知书_', ''))}"
-      </code>
-    </p>`;
-  } else {
-    msg.innerHTML = `<embed src="${url}" type="application/pdf" width="100%" height="500px" style="border:none;border-radius:6px;">`;
-  }
-  resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function sanitizeFilename(s) {
-  return s.replace(/[^a-zA-Z0-9_\u4e00-\u9fff]/g, '');
-}
-
-regenerateBtn.addEventListener('click', () => {
-  resultCard.style.display = 'none';
-  resultCard.classList.remove('result-card-enter');
-  form.scrollIntoView({ behavior: 'smooth' });
 });
 
 function showError(msg) {

@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """卡塞尔学院录取通知书生成器 - 云部署版本"""
 
-import os
-import sys
-import json
-import uuid
-import subprocess
+import os, sys, json, uuid, subprocess, secrets, time
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from urllib.parse import urlparse
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(WORK_DIR, 'outputs')
@@ -20,6 +17,19 @@ if not os.system('which tectonic > /dev/null 2>&1') == 0:
         TECTONIC = bundled
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# 临时存储生成的 PDF（token → {path, filename, time}）
+_generated = {}
+_TOKEN_EXPIRE = 3600  # 1 小时后清理
+
+def _cleanup_tokens():
+    now = time.time()
+    expired = [k for k, v in _generated.items() if now - v['time'] > _TOKEN_EXPIRE]
+    for k in expired:
+        try:
+            os.remove(_generated[k]['path'])
+        except: pass
+        del _generated[k]
 
 
 def sanitize(s):
@@ -75,6 +85,26 @@ class CassellHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/test':
             return self.send_json({'ok': True, 'ready': True, 'server': 'cassell-college'})
+        # 提供已生成的 PDF 文件
+        parsed = urlparse(self.path)
+        if parsed.path.startswith('/pdf/'):
+            token = parsed.path.split('/pdf/')[1]
+            entry = _generated.get(token)
+            if entry:
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', f'inline; filename="{entry["name"]}"')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                with open(entry['path'], 'rb') as f:
+                    self.wfile.write(f.read())
+                return
+            else:
+                self.send_response(404)
+                self.send_header('Content-Type', 'text/plain;charset=utf-8')
+                self.end_headers()
+                self.wfile.write(b'PDF not found or expired')
+                return
         return super().do_GET()
 
     def do_POST(self):
@@ -89,14 +119,11 @@ class CassellHandler(SimpleHTTPRequestHandler):
 
                 pdf_path, pdf_name = generate_pdf(data)
 
-                self.send_response(200)
-                self.send_header('Content-Type', 'application/pdf')
-                self.send_header('Content-Disposition', f'attachment; filename="{pdf_name}"')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-
-                with open(pdf_path, 'rb') as f:
-                    self.wfile.write(f.read())
+                # 生成 token 并存储
+                _cleanup_tokens()
+                token = secrets.token_hex(16)
+                _generated[token] = {'path': pdf_path, 'name': pdf_name, 'time': time.time()}
+                self.send_json({'token': token, 'filename': pdf_name})
 
             except subprocess.TimeoutExpired:
                 self._json_error(500, '编译超时，请重试')
