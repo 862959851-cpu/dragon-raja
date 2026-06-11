@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>卡塞尔学院 · 录取通知书生成</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-ornament"></div>
+  
+  <header>
+    <div class="header-seal">
+      <div class="seal-ring">
+        <span class="seal-dragon">龍</span>
+      </div>
+    </div>
+    <h1>卡塞尔学院</h1>
+    <p class="subtitle">CASSELL COLLEGE</p>
+    <p class="motto">Per Aspera Ad Astra · 穿越逆境，抵达星辰</p>
+  </header>
+
+  <main>
+    <div class="card form-card">
+      <div class="card-header">
+        <h2>学员信息登记</h2>
+        <p class="card-desc">填写信息，觉醒你的专属言灵</p>
+      </div>
+
+      <form id="admissionForm">
+        <div class="form-group">
+          <label for="nickname">学员代号 <span class="required">*</span></label>
+          <input type="text" id="nickname" name="nickname" placeholder="你的龙族代号" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zodiac">你的星座</label>
+            <select id="zodiac" name="zodiac">
+              <option value="白羊座">白羊座</option>
+              <option value="金牛座">金牛座</option>
+              <option value="双子座">双子座</option>
+              <option value="巨蟹座">巨蟹座</option>
+              <option value="狮子座">狮子座</option>
+              <option value="处女座">处女座</option>
+              <option value="天秤座">天秤座</option>
+              <option value="天蝎座">天蝎座</option>
+              <option value="射手座">射手座</option>
+              <option value="摩羯座">摩羯座</option>
+              <option value="水瓶座">水瓶座</option>
+              <option value="双鱼座">双鱼座</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dept">志愿院系</label>
+            <select id="dept" name="dept">
+              <option value="龙族系谱学系">龙族系谱学系</option>
+              <option value="魔动机械设计系">魔动机械设计系</option>
+              <option value="炼金工程系">炼金工程系</option>
+              <option value="龙族历史与考古系">龙族历史与考古系</option>
+              <option value="言灵学研究系">言灵学研究系</option>
+              <option value="执行部预备系">执行部预备系</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="hobby">爱好与特长</label>
+          <input type="text" id="hobby" name="hobby" placeholder="喜欢吃火锅、去游乐场喜欢坐过山车、爱看书…">
+        </div>
+
+        <div id="skillDisplay" class="skill-auto" style="display:none">
+          <div class="skill-tag">
+            <span class="skill-label">觉醒言灵</span>
+            <span class="skill-name" id="skillName"></span>
+          </div>
+          <div class="skill-desc" id="skillDesc"></div>
+        </div>
+
+        <input type="hidden" id="skill" name="skill" value="">
+
+        <div class="preview-section">
+          <h3>录取通知书预览</h3>
+          <div id="letterPreview"><p style="text-align:center;color:var(--text-light);font-size:0.82rem;padding:1rem 0;">填写信息后，预览将实时更新</p></div>
+        </div>
+
+        <button type="submit" id="generateBtn">
+          <span class="btn-icon">⚜</span>
+          <span class="btn-text">生成录取通知书</span>
+          <span class="btn-loader" style="display:none">✦</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="card result-card" id="resultCard" style="display:none">
+      <div class="card-header">
+        <h2>通知书已生成</h2>
+        <p class="card-desc">你的卡塞尔学院录取通知书已准备就绪</p>
+      </div>
+      <div class="result-actions">
+        <a id="downloadLink" class="btn-primary" download>
+          <span>📜</span> 下载 PDF
+        </a>
+        <button id="regenerateBtn" class="btn-secondary">
+          <span>⟳</span> 重新填写
+        </button>
+      </div>
+      <div class="preview-frame" id="pdfPreview">
+        <p class="preview-placeholder">PDF 将在下载后显示在这里</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>卡塞尔学院 · 秘党长老会 · 执行部</p>
+    <p class="footer-legal">本通知书仅供娱乐，源自江南《龙族》系列</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

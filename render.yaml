@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cassell-college
+    runtime: docker
+    repo: https://github.com/YOUR_USERNAME/cassell-college
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080

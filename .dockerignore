@@ -1,0 +1,8 @@
+node_modules/
+.git/
+outputs/
+__pycache__/
+*.pyc
+.DS_Store
+README.md
+.gitignore

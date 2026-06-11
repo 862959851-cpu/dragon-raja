@@ -1,0 +1,167 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{xeCJK}
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{setspace}
+
+\IfFontExistsTF{Noto Serif CJK SC}{
+  \setCJKmainfont{Noto Serif CJK SC}
+  \setCJKsansfont{Noto Sans CJK SC}
+  \setmainfont{Liberation Serif}
+}{%
+  \setCJKmainfont{STSong}
+  \setCJKsansfont{STHeiti}
+  \setmainfont{Times New Roman}
+}
+\setCJKsansfont{STHeiti}
+\setmainfont{Times New Roman}
+
+\geometry{a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\definecolor{cassellGold}{RGB}{180,145,70}
+\definecolor{cassellDark}{RGB}{25,25,45}
+\definecolor{cassellRed}{RGB}{139,0,0}
+\definecolor{cassellPaper}{RGB}{248,242,230}
+
+\newcommand{\cassellHeader}{%
+\begin{center}
+\begin{tikzpicture}
+  \draw[cassellGold!50, line width=0.5pt] (0,0) -- (15.5,0);
+  \draw[cassellGold, line width=1.2pt] (0,0.13) -- (15.5,0.13);
+\end{tikzpicture}
+\vspace{0.4cm}
+
+\begin{tikzpicture}
+  \draw[cassellGold, fill=cassellGold!8] (0,0) circle (1.1cm);
+  \draw[cassellGold, line width=0.8pt] (0,0) circle (0.95cm);
+  \node at (0,0.2) {\Huge\bfseries\color{cassellGold} 龍};
+  \node at (0,-0.3) {\small\itshape\color{cassellGold} Draconis};
+  \node at (0,-0.65) {\footnotesize\itshape\color{cassellGold} Aeternum};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\Huge\bfseries\color{cassellDark} 卡塞尔学院}\\[0.05cm]
+{\large\itshape\color{cassellGold} Cassell College}\\[0.05cm]
+{\small\color{cassellDark!60} \itshape ``Per Aspera Ad Astra'' --- 穿越逆境，抵达星辰}
+
+\vspace{0.2cm}
+\begin{tikzpicture}
+  \draw[cassellGold, line width=1.2pt] (0,0) -- (15.5,0);
+  \draw[cassellGold!50, line width=0.5pt] (0,-0.13) -- (15.5,-0.13);
+\end{tikzpicture}
+\end{center}
+}
+
+\newcommand{\sealStamp}{%
+\begin{tikzpicture}
+  \draw[cassellRed!70, line width=1.5pt, rotate=15] (0,0) circle (1cm);
+  \draw[cassellRed!70, line width=0.6pt, rotate=15] (0,0) circle (0.85cm);
+  \node[rotate=15, cassellRed!70] at (0,0.3) {\small 录取};
+  \node[rotate=15, cassellRed!70] at (0,-0.15) {\footnotesize 专用章};
+\end{tikzpicture}%
+}
+
+\begin{document}
+\pagestyle{empty}
+\pagecolor{cassellPaper}
+\color{cassellDark}
+
+\cassellHeader
+
+\vspace{0.3cm}
+\begin{flushright}
+  {\small\textbf{编号：} CSL-\the\year-\textbf{CPLACENUM}}\\[0.1cm]
+  {\small\textbf{日期：} \today}
+\end{flushright}
+
+\vspace{0.4cm}
+{\large\textbf{致 CPLACENICKNAME 同学：}}
+
+\vspace{0.5cm}
+\begin{onehalfspace}
+\setlength{\parindent}{2em}
+
+恭贺你！经卡塞尔学院执行部与秘党长老会联合审核，我们非常高兴地通知你，你已通过最终遴选，\textbf{正式被卡塞尔学院录取}，进入 \textbf{CPLACEDEPT} 学习。
+
+\vspace{0.2cm}
+卡塞尔学院坐落于美国伊利诺伊州芝加哥远郊，是一所拥有超过百年历史的私立研究型大学。我们致力于探索与传承人类文明中最为深邃的奥秘。在这里，你将要学习的不仅是知识与技能，更是属于龙族继承者的荣光与使命。
+
+\vspace{0.2cm}
+你的体内流淌着非凡的血统，这是与生俱来的天赋，也是无法推卸的责任。从收到这封信的这一刻起，你将踏入一个前所未见的世界——龙族与人类交织的战场，古老而又崭新的传奇。
+
+\end{onehalfspace}
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}
+  \draw[cassellRed!15, fill=cassellRed!5, rounded corners=4pt]
+    (0,0) rectangle (13,-1.6);
+  \draw[cassellRed!35, line width=0.7pt, rounded corners=4pt]
+    (0,0) rectangle (13,-1.6);
+  \node[cassellRed!80, anchor=north west] at (0.5,-0.35) {\large\bfseries 言灵觉醒};
+  \draw[cassellRed!15, line width=0.4pt] (0.5,-0.7) -- (12.5,-0.7);
+  \node[cassellRed!90, anchor=north west] at (0.5,-1.15) {\Large\bfseries 言灵 · CPLACESKILL};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}
+  \draw[cassellGold!30, fill=cassellGold!5, rounded corners=3pt]
+    (0,0) rectangle (15.5,-5.2);
+  \draw[cassellGold!70, line width=1.0pt, rounded corners=3pt]
+    (0,0) rectangle (15.5,-5.2);
+
+  \node[cassellDark, anchor=north west] at (0.5,-0.45) {\large\bfseries 学员档案};
+  \draw[cassellGold!25, line width=0.4pt] (0.5,-0.75) -- (15,-0.75);
+
+  \node[cassellDark, anchor=north west] at (0.8,-1.35) {\textbf{学员代号：}};
+  \node[cassellDark!80, anchor=north west] at (6.5,-1.35) {\textbf{CPLACENICKNAME}};
+
+  \node[cassellDark, anchor=north west] at (0.8,-2.15) {\textbf{言灵：}};
+  \node[cassellDark!80, anchor=north west] at (6.5,-2.15) {\textbf{CPLACESKILL}};
+
+  \node[cassellDark, anchor=north west] at (0.8,-2.95) {\textbf{星座：}};
+  \node[cassellDark!80, anchor=north west] at (6.5,-2.95) {\textbf{CPLACEZODIAC}};
+
+  \node[cassellDark, anchor=north west] at (0.8,-3.75) {\textbf{爱好：}};
+  \node[cassellDark!80, anchor=north west] at (6.5,-3.75) {\textbf{CPLACEHOBBY}};
+
+  \node[cassellDark, anchor=north west] at (0.8,-4.55) {\textbf{所属院系：}};
+  \node[cassellDark!80, anchor=north west] at (6.5,-4.55) {\textbf{CPLACEDEPT}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+\begin{onehalfspace}
+\setlength{\parindent}{2em}
+希望你在未来的学习与历练中，以龙血为引，以勇气为剑，守护我们所珍视的一切。校长希尔伯特·让·昂热，以及全体执行部导师，期待在芝加哥校区与你相见。
+\end{onehalfspace}
+
+\vspace{0.6cm}
+\begin{minipage}{0.55\textwidth}
+  \textbf{卡塞尔学院 执行部}\\[0.1cm]
+  \textbf{秘党长老会 联合签发}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+  \begin{flushright}
+    \sealStamp
+    \vspace{0.2cm}
+    \textbf{校长：希尔伯特·让·昂热}\\[0.05cm]
+    \itshape\small Hilbert Jean Angers
+  \end{flushright}
+\end{minipage}
+
+\vspace{1cm}
+\begin{center}
+\begin{tikzpicture}
+  \draw[cassellGold!25, line width=0.4pt] (0,0) -- (15.5,0);
+  \node[cassellGold!45, above, font=\tiny] at (7.75,0.08) {\textbf{CASSELL COLLEGE} | 秘而不宣 · 龙血永燃};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
