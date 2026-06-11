@@ -7,14 +7,15 @@ LABEL source="https://github.com/jiangnan/dragon-raja-cassell"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
+    libgraphite2-3 \
     fonts-noto-cjk \
     fonts-liberation2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Tectonic (static binary)
-ARG TECTONIC_VER=0.15.0
+ARG TECTONIC_VER=0.16.9
 RUN curl -fsSL \
-    "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VER}/tectonic-${TECTONIC_VER}-x86_64-unknown-linux-gnu.tar.gz" \
+    "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VER}/tectonic-${TECTONIC_VER}-x86_64-unknown-linux-musl.tar.gz" \
     | tar xz -C /usr/local/bin
 
 WORKDIR /app
