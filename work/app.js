@@ -43,79 +43,6 @@ function generateSkill(zodiac, hobby) {
   return { skill: `言灵·${base.skill}`, desc: base.desc, element: base.element };
 }
 
-// ===== 预览渲染 =====
-function renderPreview(data) {
-  const preview = document.getElementById('letterPreview');
-  const num = data.num || Math.floor(Math.random() * 9000 + 1000);
-  preview.innerHTML = `
-    <div class="letter-paper">
-      <div class="letter-header">
-        <div class="letter-seal">
-          <div class="letter-seal-inner">龍</div>
-        </div>
-        <h1 class="letter-title">卡塞尔学院</h1>
-        <p class="letter-sub">CASSELL COLLEGE</p>
-        <p class="letter-motto">Per Aspera Ad Astra · 穿越逆境，抵达星辰</p>
-        <div class="letter-divider"></div>
-      </div>
-
-      <div class="letter-meta">
-        <span>编号：CSL-2026-${num}</span>
-        <span>日期：${new Date().toLocaleDateString('zh-CN')}</span>
-      </div>
-
-      <p class="letter-salutation">致 <strong>${escapeHtml(data.nickname)}</strong> 同学：</p>
-
-      <div class="letter-body">
-        <p>恭贺你！经卡塞尔学院执行部与秘党长老会联合审核，我们非常高兴地通知你，你已通过最终遴选，<strong>正式被卡塞尔学院录取</strong>，进入 <strong>${escapeHtml(data.dept)}</strong> 学习。</p>
-        <p>卡塞尔学院坐落于美国伊利诺伊州芝加哥远郊，是一所拥有超过百年历史的私立研究型大学。我们致力于探索与传承人类文明中最为深邃的奥秘。在这里，你将要学习的不仅是知识与技能，更是属于龙族继承者的荣光与使命。</p>
-        <p>你的体内流淌着非凡的血统，这是与生俱来的天赋，也是无法推卸的责任。</p>
-      </div>
-
-      <div class="letter-skill-box">
-        <div class="skill-box-label">言灵觉醒</div>
-        <div class="skill-box-name">${escapeHtml(data.skill)}</div>
-      </div>
-
-      <table class="letter-info">
-        <tr><td class="info-label">学员代号</td><td class="info-val">${escapeHtml(data.nickname)}</td></tr>
-        <tr><td class="info-label">言灵</td><td class="info-val">${escapeHtml(data.skill)}</td></tr>
-        <tr><td class="info-label">星座</td><td class="info-val">${escapeHtml(data.zodiac)}</td></tr>
-        <tr><td class="info-label">爱好</td><td class="info-val">${escapeHtml(data.hobby)}</td></tr>
-        <tr><td class="info-label">所属院系</td><td class="info-val">${escapeHtml(data.dept)}</td></tr>
-      </table>
-
-      <div class="letter-body">
-        <p>希望你在未来的学习与历练中，以龙血为引，以勇气为剑，守护我们所珍视的一切。校长希尔伯特·让·昂热，以及全体执行部导师，期待在芝加哥校区与你相见。</p>
-      </div>
-
-      <div class="letter-signature">
-        <div class="sig-left">
-          卡塞尔学院 执行部<br>
-          秘党长老会 联合签发
-        </div>
-        <div class="sig-right">
-          <div class="sig-seal">录取<br><span>专用章</span></div>
-          <div class="sig-name">
-            <strong>校长：希尔伯特·让·昂热</strong><br>
-            <em>Hilbert Jean Angers</em>
-          </div>
-        </div>
-      </div>
-
-      <div class="letter-footer">
-        CASSELL COLLEGE | 秘而不宣 · 龙血永燃
-      </div>
-    </div>
-  `;
-}
-
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
 // ===== 表单交互 =====
 function updateSkill() {
   const zodiac = document.getElementById('zodiac').value;
@@ -125,20 +52,6 @@ function updateSkill() {
   document.getElementById('skillDesc').textContent = result.desc;
   document.getElementById('skill').value = result.skill;
   document.getElementById('skillDisplay').style.display = 'block';
-  // Update preview
-  updatePreview();
-}
-
-function updatePreview() {
-  const nickname = document.getElementById('nickname').value.trim() || '学员代号';
-  const hobby = document.getElementById('hobby').value.trim() || '龙族研究';
-  const skill = document.getElementById('skill').value || '言灵·天演';
-  renderPreview({
-    nickname, skill,
-    zodiac: document.getElementById('zodiac').value,
-    dept: document.getElementById('dept').value,
-    hobby
-  });
 }
 
 // Event listeners

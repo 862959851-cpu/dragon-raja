@@ -18,6 +18,17 @@ RUN curl -fsSL \
     "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VER}/tectonic-${TECTONIC_VER}-x86_64-unknown-linux-musl.tar.gz" \
     | tar xz -C /usr/local/bin
 
+# Pre-cache Tectonic bundle so first runtime compile is fast
+ENV TECTONIC_CACHE_DIR=/tectonic-cache
+RUN mkdir -p "$TECTONIC_CACHE_DIR" && \
+    printf '%s\n' \
+      '\documentclass{article}' \
+      '\begin{document}' \
+      'Pre-caching Tectonic bundle...' \
+      '\end{document}' > /tmp/precache.tex && \
+    tectonic -X compile --outdir /tmp /tmp/precache.tex 2>&1 && \
+    rm -rf /tmp/precache.*
+
 WORKDIR /app
 
 # Copy app files (work/ contains everything)
